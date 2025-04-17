@@ -1,0 +1,12 @@
+.btnsControl {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnsControl button {
+  width: 100px;
+  background-color: none;
+  border: 2px solid black;
+}

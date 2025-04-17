@@ -1,37 +1,40 @@
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
 
 export default function Stopwatch() {
   const [time, setTime] = useState(0);
   const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
+  const [stopped, setStopped] = useState(false);
 
-  let timeAtTheStart = new Date().getTime();
-  let currentTime = null;
-  let setIntervalRef = null;
+  const startTimeRef = useRef(null);
+  const intervalRef = useRef(null);
 
   const startStopwatch = () => {
     if (!isStopwatchRunning) {
-      console.log("Started");
+      setStopped(false);
       setIsStopwatchRunning(true);
-      setIntervalRef = setInterval(() => {
-        setTime(new Date().getTime() - timeAtTheStart);
+      startTimeRef.current = new Date().getTime() - time;
+      intervalRef.current = setInterval(() => {
+        setTime(new Date().getTime() - startTimeRef.current);
       }, 100);
     }
   };
 
   const stopStopwatch = () => {
+    clearInterval(intervalRef.current);
+    setStopped(true);
     setIsStopwatchRunning(false);
-    console.log("Stopped");
+    set;
   };
 
   const resetStopwatch = () => {
-    console.log("Reset");
+    setTime(0);
   };
 
   return (
     <div>
       <h2>{time}</h2>
       <div className="btnsControl">
-        <button onClick={startStopwatch}>Start</button>
+        <button onClick={startStopwatch}>{stopped ? "Resume" : "Start"}</button>
         <button onClick={stopStopwatch}>Stop</button>
         <button onClick={resetStopwatch}>Reset</button>
       </div>

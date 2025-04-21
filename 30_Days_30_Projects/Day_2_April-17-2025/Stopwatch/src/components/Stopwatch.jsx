@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 
 export default function Stopwatch() {
   const [time, setTime] = useState(0);
@@ -7,6 +7,24 @@ export default function Stopwatch() {
 
   const startTimeRef = useRef(null);
   const intervalRef = useRef(null);
+
+  useEffect(() => {
+    window.addEventListener("blur", handleBlur);
+    window.addEventListener("focus", handleFocus);
+
+    return () => {
+      window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("focus", handleFocus);
+    };
+  }, [time]);
+
+  const handleBlur = () => {
+    stopStopwatch();
+  };
+
+  const handleFocus = () => {
+    startStopwatch();
+  };
 
   const startStopwatch = () => {
     if (!isStopwatchRunning) {

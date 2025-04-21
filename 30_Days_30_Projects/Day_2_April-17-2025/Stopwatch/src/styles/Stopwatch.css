@@ -7,6 +7,12 @@
 
 .btnsControl button {
   width: 100px;
-  background-color: none;
+  background-color: white;
   border: 2px solid black;
+}
+
+.btnsControl button:disabled {
+  border: 1px solid #aaa;
+  cursor: not-allowed;
+  opacity: 0.8;
 }

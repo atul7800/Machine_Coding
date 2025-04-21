@@ -15,7 +15,7 @@ export default function Stopwatch() {
       startTimeRef.current = new Date().getTime() - time;
       intervalRef.current = setInterval(() => {
         setTime(new Date().getTime() - startTimeRef.current);
-      }, 1000);
+      }, 100);
     }
   };
 
@@ -23,11 +23,12 @@ export default function Stopwatch() {
     clearInterval(intervalRef.current);
     setStopped(true);
     setIsStopwatchRunning(false);
-    set;
   };
 
   const resetStopwatch = () => {
     setTime(0);
+    clearInterval(intervalRef.current);
+    setIsStopwatchRunning(false);
   };
 
   const formatTime = () => {
@@ -51,7 +52,9 @@ export default function Stopwatch() {
     <div>
       <h2>{formatTime()}</h2>
       <div className="btnsControl">
-        <button onClick={startStopwatch}>{stopped ? "Resume" : "Start"}</button>
+        <button disabled={isStopwatchRunning} onClick={startStopwatch}>
+          {stopped ? "Resume" : "Start"}
+        </button>
         <button onClick={stopStopwatch}>Stop</button>
         <button onClick={resetStopwatch}>Reset</button>
       </div>
